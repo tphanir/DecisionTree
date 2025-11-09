@@ -19,12 +19,12 @@ and determine which yields the best classification performance.
 
 | Criterion | File | Concept Summary |
 |------------|------|-----------------|
-| 🧩 **Entropy** | [README_entropy.md](README_entropy.md) | Measures information uncertainty. Split chosen to maximize Information Gain (ID3). |
-| ⚖️ **Gini Index** | [README_gini.md](README_gini.md) | Measures node impurity as probability of misclassification (CART). |
-| ⚙️ **Gain Ratio** | [README_gain_ratio.md](README_gain_ratio.md) | Normalizes Information Gain to reduce bias toward multi-valued features (C4.5). |
-| 📊 **Chi-Square** | [README_chi_square.md](README_chi_square.md) | Uses χ² test to check independence between attribute and target (CHAID). |
-| 📈 **Hellinger Distance** | [README_hellinger.md](README_hellinger.md) | Measures divergence between class distributions; robust for imbalanced data. |
-| 🧮 **Twoing Rule** | [README_twoing.md](README_twoing.md) | Maximizes separation between class probabilities of child nodes (CART variant). |
+| 🧩 **Entropy** | [entropy.md](entropy.md) | Measures information uncertainty. Split chosen to maximize Information Gain (ID3). |
+| ⚖️ **Gini Index** | [gini.md](gini.md) | Measures node impurity as probability of misclassification (CART). |
+| ⚙️ **Gain Ratio** | [gain_ratio.md](gain_ratio.md) | Normalizes Information Gain to reduce bias toward multi-valued features (C4.5). |
+| 📊 **Chi-Square** | [chi_square.md](chi_square.md) | Uses χ² test to check independence between attribute and target (CHAID). |
+| 📈 **Hellinger Distance** | [hellinger.md](hellinger.md) | Measures divergence between class distributions; robust for imbalanced data. |
+| 🧮 **Twoing Rule** | [twoing.md](twoing.md) | Maximizes separation between class probabilities of child nodes (CART variant). |
 
 ---
 
