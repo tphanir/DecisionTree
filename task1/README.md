@@ -2,11 +2,14 @@
 
 ## Overview
 This task aims to **implement and compare six Decision Tree splitting criteria** entirely from scratch  
-using the **UCI Car Evaluation dataset**. Each team member implemented one criterion, and all were evaluated  
-through a common modular framework defined in `base/dt_base.py`.
+using multiple **categorical datasets** from the **UCI Machine Learning Repository**.  
 
-The objective was to determine which criterion performs best before proceeding to mathematical modeling  
-and theoretical improvement in **Task 2**.
+Each team member implemented one criterion, and all were evaluated through a **common modular framework**  
+defined in `base/dt_base.py`.  
+
+Initially, experiments were conducted only on the **UCI Car Evaluation dataset**,  
+but we later extended our evaluation to a **broader set of 10 datasets** (e.g., Mushroom, Nursery, Tic-Tac-Toe, Credit Approval, etc.)  
+to assess the generalization of different criteria.
 
 ---
 
@@ -21,24 +24,27 @@ and theoretical improvement in **Task 2**.
 | 5 | Hellinger Distance | HDDT (Cieslak & Chawla, 2008) | `criteria/dt_hellinger.py` |
 | 6 | Twoing Rule | CART Variant | `criteria/dt_twoing.py` |
 
-All six implementations extend a common abstract class defined in `base/dt_base.py`.  
-The evaluation pipeline (`main_compare_dt.py`) ensures identical training/testing splits and metrics across all models.
+Each implementation extends a shared abstract base class in `base/dt_base.py`,  
+ensuring identical data handling, training, and evaluation pipelines.
 
 ---
 
-## Results on UCI Car Evaluation Dataset
+## Results Across Multiple Datasets
 
-| Criterion | Accuracy |
-|------------|-----------|
-| Entropy | 0.8632 |
-| Gini Index | 0.8632 |
-| Gain Ratio | **0.8748** |
-| Chi-Square | **0.8748** |
-| Hellinger Distance | 0.6898 |
-| Twoing Rule | 0.8632 |
+After expanding our evaluation to **10 categorical datasets**,  
+we observed that **no single splitting criterion consistently outperformed others**.  
+Performance varied depending on dataset characteristics such as:
+- Number of features and class imbalance  
+- Attribute cardinality (number of unique values per feature)  
+- Noise and dependency structure among features  
 
-**Best performing criteria:** Gain Ratio and Chi-Square  
-Both achieved an accuracy of **0.8748**, outperforming the rest on this dataset.
+For example:
+- **Gain Ratio** and **Chi-Square** performed well on multi-class, balanced datasets.  
+- **Entropy** and **Gini** were more stable on smaller or balanced datasets.  
+- **Hellinger Distance** was effective for imbalanced datasets but underperformed elsewhere.  
+
+This demonstrated that **the splitting criterion alone does not define tree performance** —  
+rather, **the tree construction strategy** plays a larger role in improving generalization.
 
 ---
 
@@ -46,80 +52,65 @@ Both achieved an accuracy of **0.8748**, outperforming the rest on this dataset.
 
 ```
 task1/
-├── base/ 
+├── base/
+│ ├── dt_base.py # Abstract base class for Decision Trees
 ├── criteria/
-├── docs/
-├── main.py
-└── README.md 
-
-base : Abstract base class for all trees
-criteria: Six splitting criteria implementations
-docs: Theoretical documentation for each criterion
-main.py: Runs and compares all DT variants
+│ ├── dt_entropy.py
+│ ├── dt_gini.py
+│ ├── dt_gain_ratio.py
+│ ├── dt_chi_square.py
+│ ├── dt_hellinger.py
+│ └── dt_twoing.py
+├── docs/ # Theoretical writeups for each splitting criterion
+├── main.py # Runs and compares all DT variants
+└── README.md # Project documentation
 ```
----
-
-## Next Steps — Moving Toward Task 2
-
-After completing Task 1, we now have a clear understanding of how different node-splitting strategies  
-affect model performance. Among all six criteria, **Gain Ratio** and **Chi-Square** produced the best results.  
-
-After team discussion, we decided to **proceed with Gain Ratio** as our base method for Task 2,  
-for the following reasons:
-- It builds on **information-theoretic principles** and provides a strong theoretical foundation.  
-- It already corrects for **bias in Information Gain**, making it a balanced starting point.  
-- It has consistent performance across categorical datasets like Car Evaluation.
 
 ---
 
-### Step 1 — Define the Research Goal
-In **Task 2**, we aim to **improve the Gain Ratio** mathematically.  
-We will explore how to make it more adaptive by incorporating additional statistical measures or  
-data-dependent weighting.
+## Insights from Task 1
 
-Possible ideas include:
-- Introducing a **dynamic normalization factor** that depends on dataset entropy.  
-- Combining **Gain Ratio** with **Chi-Square significance** for stronger statistical grounding.  
-- Experimenting with **weighted entropy** to handle uneven attribute cardinalities.
-
----
-
-### Step 2 — Develop and Derive the Mathematical Model
-We will formally derive the proposed criterion:
-- Express it as a modified Gain Ratio formulation.  
-- Justify it mathematically using proofs or reasoning (3–4 pages).  
-- Analyze its theoretical impact on impurity reduction and bias.
-
-This step will form the **core theoretical section** of our final report.
+Through the 10-dataset comparison, we conclude that:
+- **Split criteria are dataset-dependent.**  
+  No single formula (Entropy, Gini, Gain Ratio, etc.) universally dominates.  
+- **Tree design and optimization matter more** than the impurity metric itself.  
+- Improving **how the tree learns**, rather than **what it optimizes**,  
+  can lead to consistent gains across datasets.
 
 ---
 
-### Step 3 — Implement the New Criterion
-- Add a new file: `criteria/dt_proposed.py`  
-- Implement the new splitting rule by extending the existing abstract base class.  
-- Reuse the same `main.py` setup to evaluate it against all existing criteria.  
-- Log and compare accuracy, precision, recall, and F1-score.
+## Moving Forward — Tree Optimization Independent of Split Criteria
+
+In the next phase, our goal is to make the **Decision Tree learning process more robust and adaptive**,  
+irrespective of which splitting function is used.
+
+### Proposed Optimization Directions
+
+#### 1. Bagging (Bootstrap Aggregation)
+- Train multiple Decision Trees on bootstrap samples and aggregate predictions by majority vote.  
+- Reduces model variance and improves stability across datasets.  
+- Implemented as a reusable `BaggingClassifier` in `base/bagging_wrapper.py`.
+
+#### 2. Cost-Complexity Pruning
+- Prevent overfitting by penalizing overly deep or complex trees.  
+- Use an α-regularization term to balance between accuracy and simplicity.  
+- Can be implemented as a post-pruning step that evaluates subtrees on validation sets.
+
+#### 3. Oblique and Soft Splits
+- Extend axis-aligned splits to **linear combinations of features (oblique splits)**.  
+- Use **soft probabilistic splits** for smoother decision boundaries and differentiable tree models.  
+- Enhances the expressive power of trees while keeping interpretability.
 
 ---
 
-### Step 4 — Visualize and Interpret
-- Plot results for all criteria (Accuracy, F1, etc.)  
-- Visualize comparative performance between **existing vs proposed method**  
-- Save plots under `reports/output_graphs/` for inclusion in the report.
+## Next Steps — Toward Task 2
 
----
-
-### Step 5 — Document and Report
-We will consolidate everything into a structured LaTeX report (approximately 8 pages) containing:
-1. Title and Abstract  
-2. Introduction and Related Work  
-3. Mathematical Formulation of the Proposed Criterion  
-4. Implementation Details  
-5. Results and Discussion (with graphs and tables)  
-6. Conclusion and Future Scope  
-7. References  
-
-The **Task 1 documentation (`docs/` folder)** will serve as the background theory for Section 2.
+1. **Evaluate bagged and pruned versions** of existing trees on the same 10 datasets  
+   to assess consistency improvements.  
+2. **Formulate a generalized optimization framework** for Decision Trees  
+   that can be applied independent of the splitting criterion.  
+3. **Develop theoretical justification** for variance reduction, generalization,  
+   and complexity control, supported by mathematical derivations and empirical evidence.
 
 ---
 
@@ -128,13 +119,15 @@ The **Task 1 documentation (`docs/` folder)** will serve as the background theor
 2. Quinlan, J. R. (1993). *C4.5: Programs for Machine Learning*. Morgan Kaufmann.  
 3. Breiman, L., Friedman, J. H., Olshen, R. A., and Stone, C. J. (1984). *Classification and Regression Trees (CART)*.  
 4. Kass, G. V. (1980). *CHAID: An Exploratory Technique for Investigating Large Quantities of Categorical Data*. Applied Statistics, 29(2), 119–127.  
-5. Cieslak, D. A., and Chawla, N. V. (2008). *Hellinger Distance Decision Trees (HDDT)*. ECML Proceedings.
+5. Cieslak, D. A., and Chawla, N. V. (2008). *Hellinger Distance Decision Trees (HDDT)*. ECML Proceedings.  
+6. Breiman, L. (1996). *Bagging Predictors*. *Machine Learning*, 24(2), 123–140.
 
 ---
 
 **Team Summary:**  
 This task was completed collaboratively by a team of six members,  
-each implementing one splitting criterion and contributing a theoretical overview in the `docs/` folder.
+each implementing one splitting criterion and contributing theoretical documentation in `docs/`.  
 
 **Next Milestone:**  
-Proceed to **Task 2 – Enhancing the Gain Ratio Criterion** through mathematical modeling, theoretical justification, and experimental validation.
+Proceed to **Task 2 — Improving Decision Trees independent of Split Criteria**,  
+by implementing bagging, pruning, and structural optimization techniques for enhanced generalization.

@@ -1,0 +1,61 @@
+Dataset,Criterion,Accuracy
+Car Evaluation,Entropy,0.8631984585741811
+Car Evaluation,Gini Index,0.8631984585741811
+Car Evaluation,Gain Ratio,0.8747591522157996
+Car Evaluation,Chi-Square,0.8747591522157996
+Car Evaluation,Hellinger Distance,0.6897880539499036
+Car Evaluation,Twoing Rule,0.8631984585741811
+Mushroom,Entropy,0.9811320754716981
+Mushroom,Gini Index,0.9790812141099262
+Mushroom,Gain Ratio,0.9639048400328137
+Mushroom,Chi-Square,0.9790812141099262
+Mushroom,Hellinger Distance,0.5209187858900738
+Mushroom,Twoing Rule,0.9790812141099262
+Nursery,Entropy,0.8801440329218106
+Nursery,Gini Index,0.8801440329218106
+Nursery,Gain Ratio,0.8760288065843621
+Nursery,Chi-Square,0.8801440329218106
+Nursery,Hellinger Distance,0.32844650205761317
+Nursery,Twoing Rule,0.8801440329218106
+Tic-Tac-Toe Endgame,Entropy,0.7986111111111112
+Tic-Tac-Toe Endgame,Gini Index,0.8090277777777778
+Tic-Tac-Toe Endgame,Gain Ratio,0.7847222222222222
+Tic-Tac-Toe Endgame,Chi-Square,0.8090277777777778
+Tic-Tac-Toe Endgame,Hellinger Distance,0.6666666666666666
+Tic-Tac-Toe Endgame,Twoing Rule,0.8090277777777778
+Credit Approval,Entropy,0.8357487922705314
+Credit Approval,Gini Index,0.8309178743961353
+Credit Approval,Gain Ratio,0.855072463768116
+Credit Approval,Chi-Square,0.8309178743961353
+Credit Approval,Hellinger Distance,0.5217391304347826
+Credit Approval,Twoing Rule,0.8309178743961353
+Balance Scale,Entropy,0.776595744680851
+Balance Scale,Gini Index,0.7340425531914894
+Balance Scale,Gain Ratio,0.7074468085106383
+Balance Scale,Chi-Square,0.7393617021276596
+Balance Scale,Hellinger Distance,0.6914893617021277
+Balance Scale,Twoing Rule,0.7606382978723404
+Hayes-Roth,Entropy,0.6
+Hayes-Roth,Gini Index,0.6
+Hayes-Roth,Gain Ratio,0.65
+Hayes-Roth,Chi-Square,0.6
+Hayes-Roth,Hellinger Distance,0.4
+Hayes-Roth,Twoing Rule,0.6
+Congressional Voting Records,Entropy,0.9389312977099237
+Congressional Voting Records,Gini Index,0.916030534351145
+Congressional Voting Records,Gain Ratio,0.9312977099236641
+Congressional Voting Records,Chi-Square,0.9389312977099237
+Congressional Voting Records,Hellinger Distance,0.6564885496183206
+Congressional Voting Records,Twoing Rule,0.916030534351145
+Monks-1,Entropy,1.0
+Monks-1,Gini Index,1.0
+Monks-1,Gain Ratio,1.0
+Monks-1,Chi-Square,1.0
+Monks-1,Hellinger Distance,1.0
+Monks-1,Twoing Rule,1.0
+Chess (King-Rook vs King-Pawn),Entropy,0.7090719499478624
+Chess (King-Rook vs King-Pawn),Gini Index,0.7090719499478624
+Chess (King-Rook vs King-Pawn),Gain Ratio,0.7101147028154328
+Chess (King-Rook vs King-Pawn),Chi-Square,0.7090719499478624
+Chess (King-Rook vs King-Pawn),Hellinger Distance,0.64859228362878
+Chess (King-Rook vs King-Pawn),Twoing Rule,0.7090719499478624
