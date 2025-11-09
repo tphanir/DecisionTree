@@ -1,32 +1,35 @@
 # Hellinger Distance Splitting Criterion
 
 ## Overview
-Hellinger distance measures the divergence between two probability distributions (e.g., class distributions in left and right child nodes).  
-It is especially effective for imbalanced datasets.
+Hellinger Distance measures the divergence between class-probability distributions of left and right child nodes.  
+It is particularly effective for **imbalanced datasets**, where class priors differ significantly.
 
 ## Mathematical Formulation
 
-\[
-H(P, Q) = \sqrt{1 - \sum_{i=1}^{c} \sqrt{p_i q_i}}
-\]
-where \( P \) and \( Q \) are class probability distributions in left and right splits.
+Hellinger Distance:
 
-For splitting:
-\[
+$$
+H(P, Q) = \sqrt{1 - \sum_{i=1}^{c} \sqrt{p_i \, q_i}}
+$$
+
+Hellinger Gain:
+
+$$
 Gain = 1 - H(P, Q)
-\]
+$$
 
-## Interpretation
-- Lower Hellinger distance → distributions are similar (bad split)  
-- Higher Hellinger gain → better separation
+where:
+
+- $P = (p_1, p_2, \ldots, p_c)$ = class probabilities in the left child  
+- $Q = (q_1, q_2, \ldots, q_c)$ = class probabilities in the right child  
 
 ## Strengths
-- Robust against class imbalance.  
-- Unaffected by class priors.
+- Robust against class imbalance and skewed priors  
+- Insensitive to overall class frequency differences  
 
 ## Limitations
-- Slightly higher computational cost (square roots).  
-- Less intuitive interpretation.
+- Slightly higher computational cost due to square roots  
+- Less commonly available in standard ML libraries  
 
-## Key Reference
-- Cieslak, D. A. & Chawla, N. V. (2008). *Hellinger Distance Decision Trees (HDDT)*, *ECML*.
+## Reference
+Cieslak, D. A., & Chawla, N. V. (2008). *Hellinger Distance Decision Trees (HDDT)*. ECML Proceedings.

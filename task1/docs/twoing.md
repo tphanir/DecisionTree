@@ -1,29 +1,30 @@
 # Twoing Rule Splitting Criterion (CART Variant)
 
 ## Overview
-The Twoing Rule is an alternative CART splitting function that maximizes the difference between class distributions of left and right child nodes.
+The Twoing Rule, introduced as part of CART, evaluates how well a split differentiates  
+class distributions between the left and right branches. It is most useful in multi-class classification.
 
 ## Mathematical Formulation
 
-\[
-Gain = 0.25 \times P_L \times P_R \times 
-\left( \sum_{j=1}^{c} |p_{L,j} - p_{R,j}| \right)^2
-\]
-where:
-- \( P_L, P_R \): Fraction of samples going left/right  
-- \( p_{L,j}, p_{R,j} \): Class probabilities in left/right child nodes  
+Twoing Gain:
 
-## Interpretation
-- Measures the *separability* of class distributions between children.  
-- High gain → better split that distinguishes classes strongly.
+$$
+Gain = 0.25 \times P_L \times P_R \times \left( \sum_{j=1}^{c} |p_{L,j} - p_{R,j}| \right)^2
+$$
+
+where:
+
+- $P_L$, $P_R$ = fractions of samples sent to the left and right child nodes  
+- $p_{L,j}$, $p_{R,j}$ = probabilities of class $j$ in the left and right child respectively  
 
 ## Strengths
-- Encourages well-balanced, class-separating splits.  
-- Performs well in multi-class classification.
+- Encourages splits that strongly separate class distributions  
+- Handles multi-class data effectively  
 
 ## Limitations
-- Sensitive to class imbalance.  
-- Slightly more computationally complex than Gini.
+- Sensitive to class imbalance  
+- May prefer slightly unbalanced splits  
 
-## Key Reference
-- Breiman, L. et al. (1984). *Classification and Regression Trees (CART)*. Wadsworth International.
+## Reference
+Breiman, L., Friedman, J. H., Olshen, R. A., & Stone, C. J. (1984).  
+*Classification and Regression Trees (CART)*. Wadsworth International.
