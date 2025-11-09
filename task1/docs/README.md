@@ -49,7 +49,8 @@ docs/
 ├── hellinger.md
 └── twoing.md
 └── README.md
-``
+```
+
 ## Usage in the Project
 Each criterion’s implementation resides in:
 task1/criteria/dt_<criterion>.py
