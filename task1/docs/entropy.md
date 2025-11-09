@@ -1,33 +1,32 @@
 # Entropy-Based Splitting Criterion (ID3 Algorithm)
 
 ## Overview
-Entropy measures the impurity or uncertainty in a dataset.  
-A split is chosen such that it **maximizes the reduction in entropy** (i.e., maximizes information gain).
+The Entropy criterion measures the amount of uncertainty or impurity in a dataset.  
+It selects the attribute that gives the **maximum information gain** — i.e., the attribute that most reduces entropy after splitting.
 
 ## Mathematical Formulation
 
-Entropy of a dataset \( S \):
-\[
-Entropy(S) = -\sum_{i=1}^{c} p_i \log_2(p_i)
-\]
-where \( p_i \) is the probability of class \( i \) in node \( S \).
+**Entropy of a node:**
+`Entropy(S) = - Σ (p_i * log2(p_i))`
 
-Information Gain for splitting attribute \( A \):
-\[
-Gain(S, A) = Entropy(S) - \sum_{v \in Values(A)} \frac{|S_v|}{|S|} Entropy(S_v)
-\]
+**Information Gain for a split on attribute A:**
+`Gain(S, A) = Entropy(S) - Σ (|S_v| / |S|) * Entropy(S_v)`
+
+where:
+- `p_i` = proportion of samples in class *i* within node *S*  
+- `S_v` = subset of samples where attribute *A* takes value *v*
 
 ## Interpretation
-- **High entropy** → classes mixed (uncertain).
-- **Low entropy** → node is pure (certain).
+- Higher entropy → more mixed classes (impure node)  
+- Lower entropy → purer node (less uncertainty)
 
 ## Strengths
-- Intuitive and theoretically sound (from information theory).  
-- Produces compact trees.
+- Theoretically grounded in information theory  
+- Produces interpretable, compact trees  
 
 ## Limitations
-- Biased toward attributes with many distinct values.  
-- Computationally expensive due to logarithmic terms.
+- Biased toward attributes with many unique values  
+- Computationally more expensive (logarithms)
 
 ## Key Reference
-- Quinlan, J. R. (1986). *Induction of Decision Trees (ID3)*, *Machine Learning*, 1(1), 81–106.
+Quinlan, J. R. (1986). *Induction of Decision Trees (ID3)*. *Machine Learning*, 1(1), 81–106.
