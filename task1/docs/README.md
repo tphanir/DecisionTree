@@ -40,15 +40,16 @@ The six criteria are derived from classic decision tree algorithms:
 ---
 
 ## Folder Structure
+```
 docs/
-├── README_index.md # You are here
-├── README_entropy.md
-├── README_gini.md
-├── README_gain_ratio.md
-├── README_chi_square.md
-├── README_hellinger.md
-└── README_twoing.md
-
+├── entropy.md
+├── gini.md
+├── gain_ratio.md
+├── chi_square.md
+├── hellinger.md
+└── twoing.md
+└── README.md
+``
 ## Usage in the Project
 Each criterion’s implementation resides in:
 task1/criteria/dt_<criterion>.py
