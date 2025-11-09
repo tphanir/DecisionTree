@@ -6,19 +6,21 @@ It selects the attribute that gives the **maximum information gain** — i.e., t
 
 ## Mathematical Formulation
 
-**Entropy of a node:**
-`Entropy(S) = - Σ (p_i * log2(p_i))`
+Entropy of a node:
 
-**Information Gain for a split on attribute A:**
-`Gain(S, A) = Entropy(S) - Σ (|S_v| / |S|) * Entropy(S_v)`
+$$
+Entropy(S) = - \sum_{i=1}^{c} p_i \log_2(p_i)
+$$
+
+Information Gain for a split on attribute \(A\):
+
+$$
+Gain(S, A) = Entropy(S) - \sum_{v \in Values(A)} \frac{|S_v|}{|S|} Entropy(S_v)
+$$
 
 where:
-- `p_i` = proportion of samples in class *i* within node *S*  
-- `S_v` = subset of samples where attribute *A* takes value *v*
-
-## Interpretation
-- Higher entropy → more mixed classes (impure node)  
-- Lower entropy → purer node (less uncertainty)
+- \(p_i\) = proportion of samples in class \(i\) within node \(S\)
+- \(S_v\) = subset of samples where attribute \(A\) takes value \(v\)
 
 ## Strengths
 - Theoretically grounded in information theory  
@@ -26,7 +28,7 @@ where:
 
 ## Limitations
 - Biased toward attributes with many unique values  
-- Computationally more expensive (logarithms)
+- Slightly computationally heavier (logarithms)
 
-## Key Reference
+## Reference
 Quinlan, J. R. (1986). *Induction of Decision Trees (ID3)*. *Machine Learning*, 1(1), 81–106.
