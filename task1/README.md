@@ -44,13 +44,16 @@ Both achieved an accuracy of **0.8748**, outperforming the rest on this dataset.
 
 ## Directory Structure
 task1/
-├── base/ # Abstract base class for all trees
-├── criteria/ # Six splitting criteria implementations
-├── data/ # (Optional) dataset files
-├── docs/ # Theoretical documentation for each criterion
-├── utils/ # Metrics, plotting, data loading
-├── main_compare_dt.py # Runs and compares all DT variants
-└── README.md # Current file
+├── base/ 
+├── criteria/
+├── docs/
+├── main.py
+└── README.md 
+
+base : Abstract base class for all trees
+criteria: Six splitting criteria implementations
+docs: Theoretical documentation for each criterion
+main.py: Runs and compares all DT variants
 
 ---
 
