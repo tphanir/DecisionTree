@@ -88,8 +88,7 @@ irrespective of which splitting function is used.
 
 #### 1. Bagging (Bootstrap Aggregation)
 - Train multiple Decision Trees on bootstrap samples and aggregate predictions by majority vote.  
-- Reduces model variance and improves stability across datasets.  
-- Implemented as a reusable `BaggingClassifier` in `base/bagging_wrapper.py`.
+- Reduces model variance and improves stability across datasets. 
 
 #### 2. Cost-Complexity Pruning
 - Prevent overfitting by penalizing overly deep or complex trees.  
