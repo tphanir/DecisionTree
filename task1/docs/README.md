@@ -56,10 +56,13 @@ Each criterion’s implementation resides in:
 task1/criteria/dt_<criterion>.py
 
 They all inherit from the common base class:
+```
 task1/base/dt_base.py
-
+```
 The evaluation script:
+```
 task1/main_compare_dt.py
+```
 trains all six trees, compares their accuracies, and outputs a metrics table.
 
 ---
