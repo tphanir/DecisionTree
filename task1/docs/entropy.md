@@ -12,15 +12,16 @@ $$
 Entropy(S) = - \sum_{i=1}^{c} p_i \log_2(p_i)
 $$
 
-Information Gain for a split on attribute \(A\):
+Information Gain for a split on attribute $A$:
 
 $$
 Gain(S, A) = Entropy(S) - \sum_{v \in Values(A)} \frac{|S_v|}{|S|} Entropy(S_v)
 $$
 
 where:
-- \(p_i\) = proportion of samples in class \(i\) within node \(S\)
-- \(S_v\) = subset of samples where attribute \(A\) takes value \(v\)
+
+- $p_i$ = proportion of samples in class $i$ within node $S$
+- $S_v$ = subset of samples where attribute $A$ takes value $v$
 
 ## Strengths
 - Theoretically grounded in information theory  
