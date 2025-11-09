@@ -59,70 +59,82 @@ main.py: Runs and compares all DT variants
 ```
 ---
 
-## Next Steps (Task 2)
+## Next Steps — Moving Toward Task 2
 
-### 1. Select the Base Criterion
-Since both **Gain Ratio** and **Chi-Square** performed best, choose one as your **base algorithm**  
-for further theoretical and experimental improvement.
+After completing Task 1, we now have a clear understanding of how different node-splitting strategies  
+affect model performance. Among all six criteria, **Gain Ratio** and **Chi-Square** produced the best results.  
 
-Suggested direction:  
-> Use **Gain Ratio** as the base — it combines information-theoretic rigor and generalization strength.
-
----
-
-### 2. Formulate Mathematical Model
-- Develop a **mathematical enhancement** over the chosen criterion.  
-  Possible directions:
-  - Introduce a penalty or weighting factor for attribute cardinality.  
-  - Blend statistical significance (like χ²) with normalized information gain.  
-  - Optimize splitting using reinforcement or probabilistic weighting.
-
-- Prepare **3–4 pages** of derivation with theorems, lemmas, and proofs.  
-  (This forms the core of Task 2 in your report.)
+After team discussion, we decided to **proceed with Gain Ratio** as our base method for Task 2,  
+for the following reasons:
+- It builds on **information-theoretic principles** and provides a strong theoretical foundation.  
+- It already corrects for **bias in Information Gain**, making it a balanced starting point.  
+- It has consistent performance across categorical datasets like Car Evaluation.
 
 ---
 
-### 3. Implement the New Criterion
-- Add a new file, e.g.,  
-  `criteria/dt_proposed.py`
-- Integrate it into the same evaluation framework (just one class addition).  
-- Compare its results against the existing six criteria on the same dataset.
+### Step 1 — Define the Research Goal
+In **Task 2**, we aim to **improve the Gain Ratio** mathematically.  
+We will explore how to make it more adaptive by incorporating additional statistical measures or  
+data-dependent weighting.
+
+Possible ideas include:
+- Introducing a **dynamic normalization factor** that depends on dataset entropy.  
+- Combining **Gain Ratio** with **Chi-Square significance** for stronger statistical grounding.  
+- Experimenting with **weighted entropy** to handle uneven attribute cardinalities.
 
 ---
 
-### 4. Generate Comparison Graphs
-- Use line or bar charts to visualize accuracy, precision, recall, and F1 scores.  
-- Compare:
-  - Old vs New criterion  
-  - All criteria together  
-- Save graphs in `reports/output_graphs/`.
+### Step 2 — Develop and Derive the Mathematical Model
+We will formally derive the proposed criterion:
+- Express it as a modified Gain Ratio formulation.  
+- Justify it mathematically using proofs or reasoning (3–4 pages).  
+- Analyze its theoretical impact on impurity reduction and bias.
+
+This step will form the **core theoretical section** of our final report.
 
 ---
 
-### 5. Report Preparation (LaTeX)
-Prepare an **8-page report** in LaTeX containing:
-1. Title & Abstract  
-2. Introduction & Related Work  
-3. Mathematical Formulation (Proposed Model)  
+### Step 3 — Implement the New Criterion
+- Add a new file: `criteria/dt_proposed.py`  
+- Implement the new splitting rule by extending the existing abstract base class.  
+- Reuse the same `main.py` setup to evaluate it against all existing criteria.  
+- Log and compare accuracy, precision, recall, and F1-score.
+
+---
+
+### Step 4 — Visualize and Interpret
+- Plot results for all criteria (Accuracy, F1, etc.)  
+- Visualize comparative performance between **existing vs proposed method**  
+- Save plots under `reports/output_graphs/` for inclusion in the report.
+
+---
+
+### Step 5 — Document and Report
+We will consolidate everything into a structured LaTeX report (approximately 8 pages) containing:
+1. Title and Abstract  
+2. Introduction and Related Work  
+3. Mathematical Formulation of the Proposed Criterion  
 4. Implementation Details  
-5. Results & Discussion (with graphs and tables)  
-6. Conclusion & Future Scope  
+5. Results and Discussion (with graphs and tables)  
+6. Conclusion and Future Scope  
 7. References  
 
-Refer to `task1/docs/` for one-page write-ups of each splitting criterion.  
+The **Task 1 documentation (`docs/` folder)** will serve as the background theory for Section 2.
 
 ---
 
 ## References
 1. Quinlan, J. R. (1986). *Induction of Decision Trees (ID3)*. Machine Learning, 1(1), 81–106.  
 2. Quinlan, J. R. (1993). *C4.5: Programs for Machine Learning*. Morgan Kaufmann.  
-3. Breiman, L., Friedman, J. H., Olshen, R. A., & Stone, C. J. (1984). *Classification and Regression Trees (CART)*.  
+3. Breiman, L., Friedman, J. H., Olshen, R. A., and Stone, C. J. (1984). *Classification and Regression Trees (CART)*.  
 4. Kass, G. V. (1980). *CHAID: An Exploratory Technique for Investigating Large Quantities of Categorical Data*. Applied Statistics, 29(2), 119–127.  
-5. Cieslak, D. A., & Chawla, N. V. (2008). *Hellinger Distance Decision Trees (HDDT)*. ECML Proceedings.
+5. Cieslak, D. A., and Chawla, N. V. (2008). *Hellinger Distance Decision Trees (HDDT)*. ECML Proceedings.
 
 ---
 
-**Team:** 6 Members  
-Each member implemented one splitting criterion and contributed to theoretical documentation in `docs/`.
+**Team Summary:**  
+This task was completed collaboratively by a team of six members,  
+each implementing one splitting criterion and contributing a theoretical overview in the `docs/` folder.
 
-**Next Milestone:** Move to **Task 2 – Mathematical Model Development and Improvement of Gain Ratio C
+**Next Milestone:**  
+Proceed to **Task 2 – Enhancing the Gain Ratio Criterion** through mathematical modeling, theoretical justification, and experimental validation.
