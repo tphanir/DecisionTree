@@ -34,7 +34,7 @@ REP is a post-pruning technique. It starts by training a very deep, overfit tree
 
 - **Goal:** Find optimal tree complexity by controlling bias and variance  
 - **Implementation:** `base/pruning_wrapper.py`  
-- **Analysis Script:** `main_pruning_comparison.py`
+- **Analysis Script:** `main_pruning.py`
 - **Results:** `results/pruning_10_datasets.csv`  
 - **Theoretical Report:** `reports/pruning.tex`  
 
@@ -55,14 +55,14 @@ This project relies on the modular base built in Task 1:
 
 ### Bagging vs. Base Comparison
 ```bash
-python main.py
+python main_bagging.py
 ```
 
 Outputs: results/bagging_10_datasets.csv
 
 ### Pruning vs. Base Comparison
 ```bash
-python main_pruning_comparison.py
+python main_pruning.py
 ```
 
 Outputs: results/pruning_10_datasets.csv
