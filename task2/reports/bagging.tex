@@ -1,35 +1,22 @@
 \documentclass[11pt, a4paper]{report}
 
-% --- UNIVERSAL PREAMBLE BLOCK ---
-\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
-\usepackage{fontspec}
-
-\usepackage[english, bidi=basic, provide=*]{babel}
-\babelprovide[import, onchar=ids fonts]{english}
-
-% Set default/Latin font to Serif for a formal report
-\babelfont{rm}{Noto Serif}
-\babelfont{sf}{Noto Sans} % Keep sans-serif available if needed
-\babelfont{tt}{Noto Sans Mono}
-
 % --- SMART PACKAGE LOADING ---
 \usepackage{amsmath}  % For all math environments (align, equation, etc.)
 \usepackage{amssymb}  % For symbols like \mathbb
 \usepackage{booktabs} % For professional tables
 \usepackage{caption}  % For better control over table/figure captions
+\usepackage{graphicx} % If you want to include figures later
 
 \usepackage[
-    pdftitle={Task 2 Report: Theoretical Foundations of Bagging},
-    pdfauthor={Project Team},
+    pdftitle={Theoretical Foundations of Bagging},
     colorlinks=true,
     urlcolor=blue,
     linkcolor=black
 ]{hyperref} % Must be the last package
 
 % --- DOCUMENT INFORMATION ---
-\title{Task 2 Report: \\ Theoretical Foundations and Empirical Analysis of Bootstrap Aggregating (Bagging)}
-\author{Project Team}
-\date{\today}
+\title{Theoretical Foundations and Empirical Analysis of Bootstrap Aggregating (Bagging)}
+
 
 % --- BEGIN DOCUMENT ---
 \begin{document}
@@ -52,7 +39,7 @@ This variance is the primary source of overfitting. The objective of Task 2 is t
 \chapter{The Bagging Algorithm}
 \label{chap:algorithm}
 
-Bagging stands for **B**ootstrap **Ag**gregat**ing**. It is a general-purpose procedure for improving unstable machine learning models by creating an ensemble. The algorithm is as follows:
+Bagging stands for \textbf{B}ootstrap \textbf{Agg}regat\textbf{ing}. It is a general-purpose procedure for improving unstable machine learning models by creating an ensemble. The algorithm is as follows:
 
 \begin{enumerate}
     \item Let $D = \{(x_1, y_1), (x_2, y_2), \dots, (x_N, y_N)\}$ be the original training set of size $N$.
@@ -63,8 +50,10 @@ Bagging stands for **B**ootstrap **Ag**gregat**ing**. It is a general-purpose pr
     \item \textbf{Aggregate:}
     \begin{itemize}
         \item Train a base decision tree learner $h_i$ (using its full depth to maintain low bias) on each bootstrap sample $D_i$.
-        \item The final aggregated classifier, $h_{bag}(x)$, makes predictions by taking a majority vote of all $B$ base learners:
-        $$ h_{bag}(x) = \arg\max_{y \in \mathcal{Y}} \sum_{i=1}^{B} \mathbb{I}(h_i(x) = y) $$
+        \item The final aggregated classifier, $h_{\text{bag}}(x)$, makes predictions by taking a majority vote of all $B$ base learners:
+        \[
+        h_{\text{bag}}(x) = \arg\max_{y \in \mathcal{Y}} \sum_{i=1}^{B} \mathbb{I}(h_i(x) = y)
+        \]
         where $\mathbb{I}(\cdot)$ is the indicator function.
     \end{itemize}
 \end{enumerate}
@@ -72,66 +61,68 @@ Bagging stands for **B**ootstrap **Ag**gregat**ing**. It is a general-purpose pr
 \chapter{Mathematical Justification: Bias-Variance Decomposition}
 \label{chap:math}
 
-To formally prove why bagging works, we analyze its effect on the **Bias-Variance Tradeoff**. For a given test point $x$, let the true underlying function be $h(x)$ and the observed noisy data be $y = h(x) + \epsilon$, where $\epsilon$ is noise with $E[\epsilon]=0$ and $\text{Var}(\epsilon)=\sigma^2_{\epsilon}$.
+To formally prove why bagging works, we analyze its effect on the \textbf{Bias-Variance Tradeoff}. For a given test point $x$, let the true underlying function be $h(x)$ and the observed noisy data be $y = h(x) + \epsilon$, where $\epsilon$ is noise with $E[\epsilon]=0$ and $\text{Var}(\epsilon)=\sigma^2_{\epsilon}$.
 
 The expected squared error of a learned model $\hat{h}(x)$ (trained on a dataset $D$) is:
-$$ E_{D, \epsilon}\left[ (y - \hat{h}(x))^2 \right] = \underbrace{\left( E_D[\hat{h}(x)] - h(x) \right)^2}_{\textbf{Bias}^2} + \underbrace{E_D\left[ (\hat{h}(x) - E_D[\hat{h}(x)])^2 \right]}_{\textbf{Variance}} + \underbrace{\sigma^2_{\epsilon}}_{\text{Irreducible Error}} $$
+\[
+E_{D, \epsilon}\left[ (y - \hat{h}(x))^2 \right] =
+\underbrace{\left( E_D[\hat{h}(x)] - h(x) \right)^2}_{\textbf{Bias}^2}
++ \underbrace{E_D\left[ (\hat{h}(x) - E_D[\hat{h}(x)])^2 \right]}_{\textbf{Variance}}
++ \underbrace{\sigma^2_{\epsilon}}_{\text{Irreducible Error}}
+\]
 
 Bagging works by directly attacking the \textbf{Variance} term while leaving the \textbf{Bias} term largely unchanged.
 
 \section{Theorem: Bagging Reduces Estimator Variance}
 \label{sec:theorem}
 
-Let us analyze the variance of the bagged estimator. For mathematical simplicity, we use the regression case where the aggregated prediction is the average of all base learners, $\hat{h}_{bag}(x) = \frac{1}{B} \sum_{i=1}^{B} h_i(x)$. The principle holds for classification by majority vote.
+Let us analyze the variance of the bagged estimator. For mathematical simplicity, we use the regression case where the aggregated prediction is the average of all base learners, $\hat{h}_{\text{bag}}(x) = \frac{1}{B} \sum_{i=1}^{B} h_i(x)$. The principle holds for classification by majority vote.
 
 \subsection{Ideal (Unrealistic) Case: Independent Learners}
-First, assume we could train our $B$ learners $h_i$ on $B$ completely new, independent training sets drawn from the true data distribution. Our learners $h_i(x)$ would be independent and identically distributed (i.i.d.) random variables, each with variance $\sigma^2$. The variance of the bagged average would be:
-$$ \text{Var}(\hat{h}_{bag}(x)) = \text{Var}\left(\frac{1}{B} \sum_{i=1}^{B} h_i(x)\right) = \frac{1}{B^2} \sum_{i=1}^{B} \text{Var}(h_i(x)) = \frac{1}{B^2} (B\sigma^2) = \frac{\sigma^2}{B} $$
-In this ideal case, we could drive the variance to zero just by increasing $B$.
+
+Assume we could train $B$ independent learners $h_i$ on $B$ completely new datasets drawn from the true data distribution. Each learner $h_i(x)$ has variance $\sigma^2$. Then:
+\[
+\text{Var}(\hat{h}_{\text{bag}}(x)) = \text{Var}\left(\frac{1}{B} \sum_{i=1}^{B} h_i(x)\right)
+= \frac{1}{B^2} (B\sigma^2) = \frac{\sigma^2}{B}
+\]
+Thus, variance decreases linearly with $B$.
 
 \subsection{Realistic Case: Correlated Learners}
-In practice, we only have one training set $D$. We use bootstrap samples $D_i$ to *simulate* drawing from the distribution. Because these samples are drawn from the same source, the resulting trees $h_i$ and $h_j$ are correlated.
 
-Let all base learners $h_i(x)$ have the same variance $\sigma^2$.
-Let $\rho$ be the average pairwise correlation between the predictions of any two learners trained on different bootstrap samples:
-$$ \rho = \frac{\text{Cov}(h_i(x), h_j(x))}{\sqrt{\text{Var}(h_i(x))\text{Var}(h_j(x))}} = \frac{\text{Cov}(h_i(x), h_j(x))}{\sigma^2} \quad \text{for } i \ne j $$
+In practice, bootstrap samples $D_i$ are drawn from the same dataset, so base learners are correlated.
 
-We can now derive the variance of the bagged estimator:
+Let $\text{Var}(h_i(x)) = \sigma^2$ and $\text{Cov}(h_i(x), h_j(x)) = \rho\sigma^2$ for $i \neq j$, where $\rho$ is the average correlation.
+
+Then:
 \begin{align*}
-\text{Var}(\hat{h}_{bag}(x)) &= \text{Var}\left(\frac{1}{B} \sum_{i=1}^{B} h_i(x)\right) \\
-&= \frac{1}{B^2} \text{Var}\left(\sum_{i=1}^{B} h_i(x)\right) \\
+\text{Var}(\hat{h}_{\text{bag}}(x)) 
 &= \frac{1}{B^2} \sum_{i=1}^{B} \sum_{j=1}^{B} \text{Cov}(h_i(x), h_j(x)) \\
-\intertext{We split the double summation into $B$ variance terms (where $i=j$) and $B(B-1)$ covariance terms (where $i \ne j$):}
-&= \frac{1}{B^2} \left( \sum_{i=1}^{B} \text{Var}(h_i(x)) + \sum_{i \ne j} \text{Cov}(h_i(x), h_j(x)) \right) \\
-\intertext{Substitute $\text{Var}(h_i(x)) = \sigma^2$ and $\text{Cov}(h_i(x), h_j(x)) = \rho\sigma^2$:}
 &= \frac{1}{B^2} \left( B\sigma^2 + B(B-1)\rho\sigma^2 \right) \\
-\intertext{Factor out $B\sigma^2$:}
-&= \frac{B\sigma^2}{B^2} \left( 1 + (B-1)\rho \right) \\
-&= \frac{\sigma^2}{B} \left( 1 - \rho + B\rho \right) \\
-\text{Var}(\hat{h}_{bag}(x)) &= \frac{1-\rho}{B}\sigma^2 + \rho\sigma^2
+&= \frac{\sigma^2}{B} \left( 1 + (B-1)\rho \right) \\
+&= \frac{1-\rho}{B}\sigma^2 + \rho\sigma^2
 \end{align*}
 
 \subsection{Conclusion of the Theorem}
 
-As the number of trees $B$ increases, the first term in the final equation vanishes:
-$$ \lim_{B \to \infty} \text{Var}(\hat{h}_{bag}(x)) = \rho\sigma^2 $$
-Since the bootstrap samples $D_i$ are different, the resulting trees are not identical, which means their correlation $\rho$ is less than 1. Therefore:
-$$ \text{Variance(Bagged)} = \rho\sigma^2 < \sigma^2 = \text{Variance(Single Tree)} $$
-This proves that bagging **strictly reduces the variance** of any unstable learner. Because the bias of an average is the average of the biases, and all $h_i$ are low-bias (as we use deep trees), the final bagged model $h_{bag}$ has the same low bias as the base trees but with substantially lower variance.
+As $B \to \infty$:
+\[
+\lim_{B \to \infty} \text{Var}(\hat{h}_{\text{bag}}(x)) = \rho\sigma^2
+\]
+Since $\rho < 1$ (because bootstrap samples differ), bagging strictly reduces variance:
+\[
+\text{Variance(Bagged)} = \rho\sigma^2 < \sigma^2 = \text{Variance(Single Tree)}
+\]
 
-\chapter{Empirical Confirmation and OOB Error}
+Thus, bagging reduces variance without increasing bias.
+
+\chapter{Empirical Confirmation and Analysis}
 \label{chap:results}
 
 \section{Empirical Results}
-Our empirical tests, as seen in the execution of `main.py`, confirm this theoretical result. Across all datasets and all six base criteria, the bagged model's accuracy was **consistently equal to or greater than** the accuracy of the single-tree model.
 
-Table \ref{tab:results} provides a sample of these findings.
-\begin{itemize}
-    \item On unstable datasets (e.g., `Tic-Tac-Toe Endgame`), the accuracy gain from variance reduction was substantial.
-    \item On highly stable models (e.g., `Gain Ratio` on `Car Evaluation`), the variance was already low, and bagging correctly maintained the same accuracy, demonstrating that the optimization is "safe" and does not degrade performance.
-\end{itemize}
+Our empirical tests across 10 datasets confirm the theory but also reveal nuances. The results show that bagging \textbf{improves accuracy in most cases}, though not universally.
 
-\begin{table}[h]
+\begin{table}[h!]
 \centering
 \caption{Sample of Accuracy Comparison (Single Tree vs. Bagged Tree)}
 \label{tab:results}
@@ -139,26 +130,48 @@ Table \ref{tab:results} provides a sample of these findings.
 \toprule
 \textbf{Dataset} & \textbf{Criterion} & \textbf{Single Tree Acc.} & \textbf{Bagged Tree Acc.} \\
 \midrule
+\multicolumn{4}{l}{\textit{Case 1: Significant Improvement (High Variance Reduction)}} \\
+Balance Scale & Gini Index & 0.7340 & 0.8245 \\
+Balance Scale & Hellinger & 0.6915 & 0.8191 \\
 Tic-Tac-Toe & Entropy & 0.7986 & 0.8681 \\
-Tic-Tac-Toe & Gini Index & 0.8090 & 0.8715 \\
-Tic-Tac-Toe & Twoing Rule & 0.8090 & 0.8785 \\
+Voting Records & Gini Index & 0.9160 & 0.9695 \\
 \midrule
-Mushroom & Gini Index & 0.9791 & 0.9934 \\
-Mushroom & Entropy & 0.9811 & 0.9897 \\
+\multicolumn{4}{l}{\textit{Case 2: No Improvement (Stable Model or Ceiling Effect)}} \\
+Nursery & Gini Index & 0.8801 & 0.8801 \\
+Monks-1 & All Criteria & 1.0000 & 1.0000 \\
 \midrule
-Car Evaluation & Gain Ratio & 0.8748 & 0.8748 \\
-Car Evaluation & Hellinger & 0.6898 & 0.6898 \\
+\multicolumn{4}{l}{\textit{Case 3: Performance Decrease (Exceptions)}} \\
+Hayes-Roth & Gain Ratio & 0.6500 & 0.6000 \\
+Hayes-Roth & Hellinger & 0.4000 & 0.3000 \\
+Credit Approval & Gain Ratio & 0.8551 & 0.8406 \\
+Voting Records & Hellinger & 0.6565 & 0.6489 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
+\section{Analysis of Results}
+
+\subsection{Case 1: Significant Improvement}
+Datasets like \texttt{Balance Scale} and \texttt{Tic-Tac-Toe} show large accuracy gains — classic bagging behavior, where averaging cancels individual errors and stabilizes predictions.
+
+\subsection{Case 2: No Improvement}
+On the \texttt{Nursery} dataset, trees were already stable. On \texttt{Monks-1}, perfect accuracy caused a ceiling effect.
+
+\subsection{Case 3: Performance Decrease}
+Occasional decreases in accuracy (e.g., \texttt{Hayes-Roth}) arise when bias increases slightly more than variance decreases. Two reasons:
+\begin{enumerate}
+    \item \textbf{Gain Ratio:} Built-in regularization interacts with bagging’s variance reduction, increasing bias.
+    \item \textbf{Hellinger Distance:} For small or imbalanced datasets, bootstrapping can distort class distributions, hurting learner quality.
+\end{enumerate}
+
 \section{Lemma: The Out-of-Bag (OOB) Error}
-Bagging provides a "free" and robust measure of generalization error via the OOB error.
 
-\textbf{Proof:} For a training set $D$ of size $N$, the probability of a specific instance $z_j \in D$ \textit{not} being chosen in a single bootstrap draw is $(1 - 1/N)$. The probability of it not being chosen $N$ times in a row (i.e., not being in a bootstrap sample $D_i$) is:
-$$ P(z_j \notin D_i) = \left(1 - \frac{1}{N}\right)^N $$
-As $N \to \infty$, this limit is $e^{-1} \approx 0.368$. This means every instance is "Out-of-Bag" (OOB) for approximately $36.8\%$ of the trees in the ensemble.
+For a dataset $D$ of size $N$, the probability that a sample is \textit{not} included in a bootstrap draw is:
+\[
+P(z_j \notin D_i) = \left(1 - \frac{1}{N}\right)^N \to e^{-1} \approx 0.368
+\]
+Thus, each instance is out-of-bag (OOB) for about 36.8\% of trees.  
 
-We can compute an OOB prediction $\hat{h}_{oob}(x_j)$ for each instance $x_j$ by taking a majority vote of *only* the trees that did not see $x_j$ during training. The average error of these OOB predictions across all $N$ instances serves as an unbiased estimate of the true generalization error, removing the need for a separate validation set or k-fold cross-validation.
+By aggregating predictions from only those trees that did not train on $x_j$, we obtain an unbiased estimate of the true generalization error — without needing a separate validation set or k-fold cross-validation.
 
 \end{document}

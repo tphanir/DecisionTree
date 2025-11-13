@@ -1,0 +1,124 @@
+% Updated pruning.tex aligned with bagging.tex structure
+\documentclass[11pt, a4paper]{report}
+
+% --- SMART PACKAGE LOADING ---
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{graphicx}
+
+\usepackage[
+    pdftitle={Theoretical Foundations of Reduced Error Pruning},
+    colorlinks=true,
+    urlcolor=blue,
+    linkcolor=black
+]{hyperref}
+
+% --- DOCUMENT INFORMATION ---
+\title{Theoretical Foundations and Empirical Analysis of Reduced Error Pruning (REP)}
+\author{Project Team}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\chapter{Introduction: The Bias-Variance Dilemma}
+\label{chap:intro}
+
+The fundamental challenge in decision tree construction is the \textbf{Bias-Variance Tradeoff}. Task 1 used pre-pruning (\texttt{max\_depth=5}) to limit overfitting, but this raises two opposing issues:
+\begin{itemize}
+    \item \textbf{High Bias (Underfitting):} A shallow tree cannot represent complex relationships.
+    \item \textbf{High Variance (Overfitting):} A very deep tree memorizes noise and has poor generalization.
+\end{itemize}
+Reduced Error Pruning (REP) starts with an overfit tree and simplifies it using a validation set to reduce variance while controlling bias.
+
+\chapter{The Reduced Error Pruning (REP) Algorithm}
+\label{chap:algorithm}
+
+REP is a backward-pruning method relying on a held-out validation set:
+
+\begin{enumerate}
+    \item Split the dataset $D$ into a training set $D_{train}$ and validation set $D_{val}$.
+    \item Grow a deep, overfitted tree $T_{max}$ using only $D_{train}$.
+    \item For each non-leaf node $t$ (bottom-up):
+    \begin{itemize}
+        \item Let $T_{subtree}$ be the subtree rooted at $t$.
+        \item Let $T_{pruned}$ be the tree where $t$ becomes a leaf.
+        \item Compute validation errors:
+        $$Error(T_{subtree}, D_{val}) \quad \text{vs.} \quad Error(T_{pruned}, D_{val})$$
+        \item If pruning does not worsen validation error, prune permanently.
+    \end{itemize}
+    \item The final pruned tree is $T_{rep}$.
+\end{enumerate}
+
+\chapter{Mathematical Justification: Error Estimation}
+\label{chap:math}
+
+Let $R(T)$ denote the true generalization error of a tree $T$.
+We consider:
+\begin{itemize}
+    \item $R_S(T)$: Training (resubstitution) error.
+    \item $R_V(T)$: Validation error.
+\end{itemize}
+
+\section{Theorem: Why Training Error Misleads}
+\label{sec:theorem}
+
+Minimizing $R_S(T)$ always selects the most complex tree:
+$$\arg\min_{T} R_S(T) = T_{max}$$
+This overfit tree has artificially low training error but high true error. Thus, resubstitution error is a biased, overly optimistic estimator.
+
+\section{Lemma: Validation Error as an Unbiased Estimator}
+\label{sec:lemma}
+
+Because $T_{max}$ was trained only on $D_{train}$, the validation set $D_{val}$ is independent. Therefore:
+$$E[R_V(T)] = R(T)$$
+This makes $R_V(T)$ a reliable proxy for the true generalization error. REP greedily minimizes $R_V(T)$ over all pruned subtrees, finding a balance between bias and variance.
+
+\chapter{Empirical Confirmation and Analysis}
+\label{chap:results}
+
+\section{Empirical Results}
+REP was tested across 10 datasets, comparing base shallow trees to pruned trees.
+
+\begin{table}[h!]
+\centering
+\caption{Accuracy Comparison (Base Tree vs. Pruned Tree)}
+\label{tab:results}
+\begin{tabular}{llcc}
+\toprule
+\textbf{Dataset} & \textbf{Criterion} & \textbf{Base Acc.} & \textbf{Pruned Acc.} \\
+\midrule
+Car Evaluation & Gini & 0.8632 & 0.9461 \\
+Nursery & Entropy & 0.8801 & 0.9771 \\
+Tic-Tac-Toe & Gain Ratio & 0.7847 & 0.8646 \\
+Hayes-Roth & Gini & 0.6000 & 0.8000 \\
+Voting Records & Twoing & 0.9143 & 0.9714 \\
+\midrule
+Mushroom & Gini & 0.9994 & 1.0000 \\
+Chess & Entropy & 0.7091 & 0.7091 \\
+\midrule
+Car Evaluation & Hellinger & 0.6898 & 0.6724 \\
+Credit Approval & Hellinger & 0.5510 & 0.5102 \\
+Hayes-Roth & Hellinger & 0.4000 & 0.2500 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Analysis of Results}
+
+\subsection{Case 1: Significant Improvement}
+Most datasets exhibit large improvements, indicating that base trees were underfitting and REP successfully reduced bias while also controlling variance.
+
+\subsection{Case 2: No Improvement}
+Stable datasets such as \texttt{Mushroom} already had near-optimal accuracy.
+REP correctly avoids unnecessary pruning.
+
+\subsection{Case 3: Accuracy Decrease}
+Hellinger Distance produced unstable deep trees, making REP less effective.
+This suggests the criterion may be unsuitable for some datasets.
+
+
+\end{document}
