@@ -58,15 +58,20 @@ This project relies on the modular base built in Task 1:
 python main_bagging.py
 ```
 
-Outputs: results/bagging_10_datasets.csv
+#### Outputs: 
+```
+results/bagging_10_datasets.csv
+```
 
 ### Pruning vs. Base Comparison
 ```bash
 python main_pruning.py
 ```
 
-Outputs: results/pruning_10_datasets.csv
-
+#### Outputs: 
+```
+results/pruning_10_datasets.csv
+```
 
 ### Directory Structure
 ```
