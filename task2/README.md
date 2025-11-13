@@ -22,8 +22,7 @@ Bagging trains multiple base estimators on bootstrap samples (sampling with repl
 
 - **Goal:** Reduce variance in decision trees  
 - **Implementation:** `base/bagging_wrapper.py`  
-- **Analysis Script:** `main.py`  
-- **Plot Generation:** `plot.py`  
+- **Analysis Script:** `main_bagging.py`  
 - **Results:** `results/bagging_10_datasets.csv`  
 - **Theoretical Report:** `reports/bagging.tex`  
 
@@ -35,8 +34,7 @@ REP is a post-pruning technique. It starts by training a very deep, overfit tree
 
 - **Goal:** Find optimal tree complexity by controlling bias and variance  
 - **Implementation:** `base/pruning_wrapper.py`  
-- **Analysis Script:** `main_pruning_comparison.py`  
-- **Plot Generation:** `plot_pruning.py`  
+- **Analysis Script:** `main_pruning_comparison.py`
 - **Results:** `results/pruning_10_datasets.csv`  
 - **Theoretical Report:** `reports/pruning.tex`  
 
