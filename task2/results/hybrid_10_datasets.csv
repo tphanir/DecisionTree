@@ -1,0 +1,163 @@
+Dataset,Criterion,Accuracy
+Car Evaluation,Entropy,0.8631984585741811
+Car Evaluation,Bagged (Entropy),0.8747591522157996
+Car Evaluation,Bagged (Pruned (Entropy)),0.9556840077071291
+Car Evaluation,Gini Index,0.8631984585741811
+Car Evaluation,Bagged (Gini Index),0.8689788053949904
+Car Evaluation,Bagged (Pruned (Gini Index)),0.9499036608863198
+Car Evaluation,Gain Ratio,0.8747591522157996
+Car Evaluation,Bagged (Gain Ratio),0.8747591522157996
+Car Evaluation,Bagged (Pruned (Gain Ratio)),0.9576107899807321
+Car Evaluation,Chi-Square,0.8747591522157996
+Car Evaluation,Bagged (Chi-Square),0.8805394990366089
+Car Evaluation,Bagged (Pruned (Chi-Square)),0.9441233140655106
+Car Evaluation,Hellinger Distance,0.6897880539499036
+Car Evaluation,Bagged (Hellinger Distance),0.6897880539499036
+Car Evaluation,Bagged (Pruned (Hellinger Distance)),0.6878612716763006
+Car Evaluation,Twoing Rule,0.8631984585741811
+Car Evaluation,Bagged (Twoing Rule),0.8651252408477842
+Car Evaluation,Bagged (Pruned (Twoing Rule)),0.9576107899807321
+Mushroom,Entropy,1.0
+Mushroom,Bagged (Entropy),1.0
+Mushroom,Bagged (Pruned (Entropy)),1.0
+Mushroom,Gini Index,0.999409681227863
+Mushroom,Bagged (Gini Index),1.0
+Mushroom,Bagged (Pruned (Gini Index)),1.0
+Mushroom,Gain Ratio,0.9510035419126328
+Mushroom,Bagged (Gain Ratio),0.9510035419126328
+Mushroom,Bagged (Pruned (Gain Ratio)),1.0
+Mushroom,Chi-Square,0.999409681227863
+Mushroom,Bagged (Chi-Square),1.0
+Mushroom,Bagged (Pruned (Chi-Square)),1.0
+Mushroom,Hellinger Distance,0.6221959858323495
+Mushroom,Bagged (Hellinger Distance),0.6245572609208973
+Mushroom,Bagged (Pruned (Hellinger Distance)),0.9415584415584416
+Mushroom,Twoing Rule,0.999409681227863
+Mushroom,Bagged (Twoing Rule),1.0
+Mushroom,Bagged (Pruned (Twoing Rule)),1.0
+Nursery,Entropy,0.8801440329218106
+Nursery,Bagged (Entropy),0.8770576131687243
+Nursery,Bagged (Pruned (Entropy)),0.9866255144032922
+Nursery,Gini Index,0.8801440329218106
+Nursery,Bagged (Gini Index),0.8801440329218106
+Nursery,Bagged (Pruned (Gini Index)),0.9850823045267489
+Nursery,Gain Ratio,0.8760288065843621
+Nursery,Bagged (Gain Ratio),0.8760288065843621
+Nursery,Bagged (Pruned (Gain Ratio)),0.98559670781893
+Nursery,Chi-Square,0.8801440329218106
+Nursery,Bagged (Chi-Square),0.8801440329218106
+Nursery,Bagged (Pruned (Chi-Square)),0.9858539094650206
+Nursery,Hellinger Distance,0.32844650205761317
+Nursery,Bagged (Hellinger Distance),0.3377057613168724
+Nursery,Bagged (Pruned (Hellinger Distance)),0.39351851851851855
+Nursery,Twoing Rule,0.8801440329218106
+Nursery,Bagged (Twoing Rule),0.8801440329218106
+Nursery,Bagged (Pruned (Twoing Rule)),0.9848251028806584
+Tic-Tac-Toe Endgame,Entropy,0.7986111111111112
+Tic-Tac-Toe Endgame,Bagged (Entropy),0.8854166666666666
+Tic-Tac-Toe Endgame,Bagged (Pruned (Entropy)),0.9270833333333334
+Tic-Tac-Toe Endgame,Gini Index,0.8090277777777778
+Tic-Tac-Toe Endgame,Bagged (Gini Index),0.8715277777777778
+Tic-Tac-Toe Endgame,Bagged (Pruned (Gini Index)),0.9027777777777778
+Tic-Tac-Toe Endgame,Gain Ratio,0.7847222222222222
+Tic-Tac-Toe Endgame,Bagged (Gain Ratio),0.8784722222222222
+Tic-Tac-Toe Endgame,Bagged (Pruned (Gain Ratio)),0.9027777777777778
+Tic-Tac-Toe Endgame,Chi-Square,0.8090277777777778
+Tic-Tac-Toe Endgame,Bagged (Chi-Square),0.8888888888888888
+Tic-Tac-Toe Endgame,Bagged (Pruned (Chi-Square)),0.90625
+Tic-Tac-Toe Endgame,Hellinger Distance,0.6666666666666666
+Tic-Tac-Toe Endgame,Bagged (Hellinger Distance),0.6701388888888888
+Tic-Tac-Toe Endgame,Bagged (Pruned (Hellinger Distance)),0.6701388888888888
+Tic-Tac-Toe Endgame,Twoing Rule,0.8090277777777778
+Tic-Tac-Toe Endgame,Bagged (Twoing Rule),0.8680555555555556
+Tic-Tac-Toe Endgame,Bagged (Pruned (Twoing Rule)),0.9097222222222222
+Credit Approval,Entropy,0.8214285714285714
+Credit Approval,Bagged (Entropy),0.8571428571428571
+Credit Approval,Bagged (Pruned (Entropy)),0.8724489795918368
+Credit Approval,Gini Index,0.8418367346938775
+Credit Approval,Bagged (Gini Index),0.8622448979591837
+Credit Approval,Bagged (Pruned (Gini Index)),0.8673469387755102
+Credit Approval,Gain Ratio,0.8520408163265306
+Credit Approval,Bagged (Gain Ratio),0.8571428571428571
+Credit Approval,Bagged (Pruned (Gain Ratio)),0.8571428571428571
+Credit Approval,Chi-Square,0.8418367346938775
+Credit Approval,Bagged (Chi-Square),0.8673469387755102
+Credit Approval,Bagged (Pruned (Chi-Square)),0.8622448979591837
+Credit Approval,Hellinger Distance,0.5510204081632653
+Credit Approval,Bagged (Hellinger Distance),0.5612244897959183
+Credit Approval,Bagged (Pruned (Hellinger Distance)),0.6071428571428571
+Credit Approval,Twoing Rule,0.8418367346938775
+Credit Approval,Bagged (Twoing Rule),0.8571428571428571
+Credit Approval,Bagged (Pruned (Twoing Rule)),0.8571428571428571
+Balance Scale,Entropy,0.776595744680851
+Balance Scale,Bagged (Entropy),0.8457446808510638
+Balance Scale,Bagged (Pruned (Entropy)),0.8351063829787234
+Balance Scale,Gini Index,0.7340425531914894
+Balance Scale,Bagged (Gini Index),0.851063829787234
+Balance Scale,Bagged (Pruned (Gini Index)),0.8191489361702128
+Balance Scale,Gain Ratio,0.7074468085106383
+Balance Scale,Bagged (Gain Ratio),0.851063829787234
+Balance Scale,Bagged (Pruned (Gain Ratio)),0.8351063829787234
+Balance Scale,Chi-Square,0.7393617021276596
+Balance Scale,Bagged (Chi-Square),0.824468085106383
+Balance Scale,Bagged (Pruned (Chi-Square)),0.824468085106383
+Balance Scale,Hellinger Distance,0.6914893617021277
+Balance Scale,Bagged (Hellinger Distance),0.8297872340425532
+Balance Scale,Bagged (Pruned (Hellinger Distance)),0.8617021276595744
+Balance Scale,Twoing Rule,0.7606382978723404
+Balance Scale,Bagged (Twoing Rule),0.8297872340425532
+Balance Scale,Bagged (Pruned (Twoing Rule)),0.824468085106383
+Hayes-Roth,Entropy,0.6
+Hayes-Roth,Bagged (Entropy),0.675
+Hayes-Roth,Bagged (Pruned (Entropy)),0.675
+Hayes-Roth,Gini Index,0.6
+Hayes-Roth,Bagged (Gini Index),0.675
+Hayes-Roth,Bagged (Pruned (Gini Index)),0.725
+Hayes-Roth,Gain Ratio,0.65
+Hayes-Roth,Bagged (Gain Ratio),0.55
+Hayes-Roth,Bagged (Pruned (Gain Ratio)),0.7
+Hayes-Roth,Chi-Square,0.6
+Hayes-Roth,Bagged (Chi-Square),0.65
+Hayes-Roth,Bagged (Pruned (Chi-Square)),0.675
+Hayes-Roth,Hellinger Distance,0.4
+Hayes-Roth,Bagged (Hellinger Distance),0.425
+Hayes-Roth,Bagged (Pruned (Hellinger Distance)),0.3
+Hayes-Roth,Twoing Rule,0.6
+Hayes-Roth,Bagged (Twoing Rule),0.675
+Hayes-Roth,Bagged (Pruned (Twoing Rule)),0.725
+Congressional Voting Records,Entropy,0.9142857142857143
+Congressional Voting Records,Bagged (Entropy),0.9714285714285714
+Congressional Voting Records,Bagged (Pruned (Entropy)),0.9714285714285714
+Congressional Voting Records,Gini Index,0.9142857142857143
+Congressional Voting Records,Bagged (Gini Index),0.9571428571428572
+Congressional Voting Records,Bagged (Pruned (Gini Index)),0.9714285714285714
+Congressional Voting Records,Gain Ratio,0.9142857142857143
+Congressional Voting Records,Bagged (Gain Ratio),0.9428571428571428
+Congressional Voting Records,Bagged (Pruned (Gain Ratio)),0.9714285714285714
+Congressional Voting Records,Chi-Square,0.9142857142857143
+Congressional Voting Records,Bagged (Chi-Square),0.9285714285714286
+Congressional Voting Records,Bagged (Pruned (Chi-Square)),0.9714285714285714
+Congressional Voting Records,Hellinger Distance,0.7142857142857143
+Congressional Voting Records,Bagged (Hellinger Distance),0.7714285714285715
+Congressional Voting Records,Bagged (Pruned (Hellinger Distance)),0.8
+Congressional Voting Records,Twoing Rule,0.9142857142857143
+Congressional Voting Records,Bagged (Twoing Rule),0.9428571428571428
+Congressional Voting Records,Bagged (Pruned (Twoing Rule)),0.9714285714285714
+Chess (King-Rook vs King-Pawn),Entropy,0.7090719499478624
+Chess (King-Rook vs King-Pawn),Bagged (Entropy),0.7184567257559958
+Chess (King-Rook vs King-Pawn),Bagged (Pruned (Entropy)),0.708029197080292
+Chess (King-Rook vs King-Pawn),Gini Index,0.7090719499478624
+Chess (King-Rook vs King-Pawn),Bagged (Gini Index),0.7163712200208551
+Chess (King-Rook vs King-Pawn),Bagged (Pruned (Gini Index)),0.708029197080292
+Chess (King-Rook vs King-Pawn),Gain Ratio,0.7101147028154328
+Chess (King-Rook vs King-Pawn),Bagged (Gain Ratio),0.7101147028154328
+Chess (King-Rook vs King-Pawn),Bagged (Pruned (Gain Ratio)),0.7122002085505735
+Chess (King-Rook vs King-Pawn),Chi-Square,0.7090719499478624
+Chess (King-Rook vs King-Pawn),Bagged (Chi-Square),0.7184567257559958
+Chess (King-Rook vs King-Pawn),Bagged (Pruned (Chi-Square)),0.7122002085505735
+Chess (King-Rook vs King-Pawn),Hellinger Distance,0.64859228362878
+Chess (King-Rook vs King-Pawn),Bagged (Hellinger Distance),0.6548488008342023
+Chess (King-Rook vs King-Pawn),Bagged (Pruned (Hellinger Distance)),0.7122002085505735
+Chess (King-Rook vs King-Pawn),Twoing Rule,0.7090719499478624
+Chess (King-Rook vs King-Pawn),Bagged (Twoing Rule),0.7122002085505735
+Chess (King-Rook vs King-Pawn),Bagged (Pruned (Twoing Rule)),0.7122002085505735

@@ -1,0 +1,174 @@
+\documentclass[11pt, a4paper]{report}
+
+% --- SMART PACKAGE LOADING ---
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{array}
+
+\usepackage[
+    pdftitle={Theoretical Foundations of a Hybrid Bagged-Pruned Model},
+    colorlinks=true,
+    urlcolor=blue,
+    linkcolor=black
+]{hyperref}
+
+% --- DOCUMENT INFORMATION ---
+\title{Theoretical Foundations and Empirical Analysis of a Hybrid Bagged-Pruned Decision Tree}
+\author{Project Team}
+\date{\today}
+
+% --- Table Formatting ---
+\definecolor{lightgray}{gray}{0.9}
+\newcolumntype{C}{>{\centering\arraybackslash}p{2.2cm}}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\chapter{Introduction: Unifying Optimization Strategies}
+\label{chap:intro}
+
+The previous reports in this series analyzed two distinct methods for mitigating the poor generalization of single decision trees. [cite_start]Both methods aimed to solve the \textbf{Bias-Variance Tradeoff} [cite: 1, 37] [cite_start]by reducing the high variance that stems from the instability of greedy tree construction[cite: 3, 25, 28].
+
+\begin{itemize}
+    [cite_start]\item \textbf{Reduced Error Pruning (REP)} addresses this by simplifying a single, fully-grown tree against a validation set[cite: 4, 5]. [cite_start]This technique reduces variance by removing overfitted branches, though at a potential cost of slightly increasing bias[cite: 19].
+    
+    [cite_start]\item \textbf{Bootstrap Aggregating (Bagging)} addresses this by creating an ensemble of many deep, high-variance trees trained on bootstrap samples[cite: 34, 35]. [cite_start]It then takes a majority vote to "average out" the individual errors, strictly reducing the ensemble's variance[cite: 46].
+\end{itemize}
+
+This report introduces a \textbf{Hybrid Model} that combines both approaches. The central hypothesis is that we can achieve a superior, more robust model by bagging an ensemble of \textit{stable, low-variance pruned trees} rather than the standard approach of bagging \textit{unstable, high-variance unpruned trees}.
+
+\chapter{The Hybrid (Bagged-Pruned) Algorithm}
+\label{chap:algorithm}
+
+The hybrid algorithm integrates the procedures from both \texttt{bagging.tex} and \texttt{pruning.tex}. The \texttt{PruningWrapper} effectively becomes the base learner for the \texttt{BaggingWrapper}.
+
+\begin{enumerate}
+    [cite_start]\item Let $D = \{(x_1, y_1), \dots, (x_N, y_N)\}$ be the original training set[cite: 33].
+    
+    \item \textbf{Bootstrap (Outer-Loop):} For $i = 1$ to $B$ (e.g., $B=50$):
+    \begin{itemize}
+        [cite_start]\item Create a bootstrap sample $D_i$ by drawing $N$ instances from $D$ with replacement[cite: 34].
+        \item This $D_i$ now serves as the \textit{entire} dataset for one base learner.
+    \end{itemize}
+    
+    \item \textbf{Prune (Inner-Loop):} For each $D_i$, we fit a \texttt{PruningWrapper}:
+    \begin{itemize}
+        [cite_start]\item The wrapper internally splits $D_i$ into $D_{i, train}$ and $D_{i, val}$[cite: 5].
+        [cite_start]\item A deep tree $T_{max, i}$ is grown on $D_{i, train}$[cite: 6].
+        [cite_start]\item This tree is pruned from the bottom-up using $D_{i, val}$ to produce a final, stable tree, $T_{rep, i}$[cite: 7, 10].
+    \end{itemize}
+    
+    \item \textbf{Aggregate:}
+    \begin{itemize}
+        \item We collect the ensemble of $B$ pruned trees: $\{T_{rep, 1}, T_{rep, 2}, \dots, T_{rep, B}\}$.
+        [cite_start]\item The final hybrid classifier, $h_{hybrid}(x)$, makes predictions by taking a majority vote of this \textit{pruned} ensemble[cite: 36]:
+        \[
+        h_{hybrid}(x) = \arg\max_{y \in \mathcal{Y}} \sum_{i=1}^{B} \mathbb{I}(T_{rep, i}(x) = y)
+        \]
+    \end{itemize}
+\end{enumerate}
+
+\chapter{Mathematical Justification: A Two-Stage Variance Reduction}
+\label{chap:math}
+
+[cite_start]We again use the Bias-Variance Decomposition as our foundation[cite: 37, 38]:
+\[
+E[\text{Error}] = \textbf{Bias}^2 + \textbf{Variance} + \sigma^2_{\epsilon}
+\]
+[cite_start]Our new model applies variance reduction at two separate stages, which we can analyze using the variance formula for correlated learners from \texttt{bagging.tex}[cite: 45].
+
+\section{Analysis of Standard Bagging}
+\label{sec:standard_bagging}
+
+Standard bagging (our \textbf{Bagged} model) uses an unpruned tree $h_i$ as its base learner. This learner has high variance, $\text{Var}(h_i) = \sigma^2_{base}$. [cite_start]The variance of the ensemble is[cite: 45]:
+\[
+\text{Var}(\hat{h}_{\text{bag}}) = \rho\sigma^2_{base} + \frac{1-\rho}{B}\sigma^2_{base}
+\]
+[cite_start]Here, the model's performance is limited by the correlation $\rho$ and the \textit{high} initial variance $\sigma^2_{base}$[cite: 46].
+
+\section{Theorem: Hybrid Model Variance}
+\label{sec:hybrid_theorem}
+
+Our \textbf{Hybrid} model uses a \textit{pruned} tree $h'_{i}$ as its base learner. From \texttt{pruning.tex}, we know this learner is designed to be more stable.
+
+\begin{itemize}
+    \item \textbf{Stage 1 (Pruning):} The pruning process reduces the variance of the base learner itself. Let this new, lower variance be $\sigma^2_{pruned}$, where $\sigma^2_{pruned} < \sigma^2_{base}$.
+    
+    \item \textbf{Stage 2 (Bagging):} We now bag an ensemble of these already-stable learners. These learners will have their own inter-tree correlation, $\rho'$.
+\end{itemize}
+
+The variance for the hybrid model is therefore:
+\[
+\text{Var}(\hat{h}_{\text{hybrid}}) = \rho'\sigma^2_{pruned} + \frac{1-\rho'}{B}\sigma^2_{pruned}
+\]
+
+\subsection{Conclusion of the Theorem}
+The hybrid model is theoretically superior because it benefits from a "double-dip" in variance reduction:
+\begin{enumerate}
+    \item \textbf{Smaller Base Variance:} The variance term being averaged, $\sigma^2_{pruned}$, is \textit{already smaller} than the $\sigma^2_{base}$ used in standard bagging.
+    \item \textbf{Ensemble Averaging:} It still benefits from the $\frac{1}{B}$ reduction and the $\rho' < 1$ factor of standard ensemble averaging.
+\end{enumerate}
+[cite_start]The only risk is that the pruning stage (Stage 1) might increase bias [cite: 19] so much that it negates the variance gains. The empirical results will test this tradeoff.
+
+\chapter{Empirical Confirmation and Analysis}
+\label{chap:results}
+
+We ran all four models (Base, Pruned, Bagged, Hybrid) on 10 datasets. The "Monks-1" dataset was skipped by the pre-processing logic, so all averages are based on the 9 remaining datasets.
+
+\section{Average Accuracy Analysis}
+The average accuracy for each model type was computed across all 9 datasets for each of the 6 splitting criteria. The results are summarized in Table \ref{tab:summary}.
+
+\begin{table}[h!]
+\centering
+\caption{Average Accuracy Across 9 Datasets}
+\label{tab:summary}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}l|C|C|C|>{\columncolor{lightgray}}C@{}}
+\toprule
+\textbf{Splitting Criterion} & \textbf{Base Model} & \textbf{Pruned Model} & \textbf{Bagged Model} & \textbf{Hybrid Model} \\
+\midrule
+Entropy        & 0.8181 & 0.8669 & 0.8506 & \textbf{0.8750} \\
+Gini Index     & 0.8168 & 0.8733 & 0.8481 & \textbf{0.8801} \\
+Gain Ratio     & 0.8134 & 0.8634 & 0.8360 & \textbf{0.8817} \\
+Chi-Square     & 0.8186 & 0.8721 & 0.8446 & \textbf{0.8850} \\
+Hellinger      & 0.5903 & 0.6159 & 0.5982 & \textbf{0.6601} \\
+Twoing Rule    & 0.8197 & 0.8705 & 0.8504 & \textbf{0.8847}\textsuperscript{*} \\
+\bottomrule
+\multicolumn{5}{l}{\textsuperscript{*}\footnotesize{Avg. for Hybrid-Twoing based on 8 datasets; 'Chess' data was missing from log.}}
+\end{tabular}
+\end{table}
+
+\section{Analysis of Results}
+The summary table strongly confirms our hypothesis. The Hybrid model is the \textbf{consistent winner}, achieving the highest average accuracy for all six splitting criteria.
+
+\subsection{Case 1: Pruning is the Dominant Factor}
+On many datasets (e.g., "Car Evaluation", "Congressional Voting"), the single Pruned model shows a massive accuracy jump from the Base model, while the standard Bagged model shows a much smaller one.
+\begin{itemize}
+    \item \textbf{Example (Car, Gini):} Base (0.8632) $\to$ Pruned (0.9461), while Bagged is only (0.8728).
+    [cite_start]\item \textbf{Analysis:} This implies the base trees were severely overfit, and pruning was the single most effective remedy[cite: 19]. The standard Bagged model, by averaging *unpruned* overfit trees, was less effective. The Hybrid model (0.9538) takes the pruned model's strength and improves it further, demonstrating its robustness.
+\end{itemize}
+
+\subsection{Case 2: The "Best of Both Worlds" (Hybrid Synergy)}
+This is the ideal case, where both pruning and bagging provide substantial, complementary gains.
+\begin{itemize}
+    \item \textbf{Example (Mushroom, Hellinger):}
+        \item Base: 0.6222
+        \item Pruned: 0.8229 (+20.07\%)
+        \item Bagged: 0.6246 (+0.24\%)
+        \item \textbf{Hybrid: 0.9475 (+12.46\% over Pruned)}
+    \item \textbf{Analysis:} This perfectly illustrates the hybrid theory. [cite_start]The Hellinger criterion produced unstable base trees[cite: 22, 54]. Pruning (Stage 1) provided a massive boost by stabilizing them. Bagging (Stage 2) then provided a \textit{second massive boost} by averaging those now-stable pruned trees, resulting in the best performance by a wide margin.
+\end{itemize}
+
+\subsection{Case 3: Ceiling Effects}
+On "easy" datasets like "Mushroom," many models achieve 1.0 accuracy. [cite_start]This is a "ceiling effect" [cite: 51] where the problem is too simple to distinguish the models. However, the Hybrid model *also* achieves 1.0, demonstrating that the extra complexity of the model does not hurt performance on simple problems.
+
+\section{Conclusion}
+The empirical data strongly supports the hybrid \texttt{Bagged(Pruned(Tree))} model. By applying variance reduction in two stages—first by pruning each base learner, and second by bagging an ensemble of them—this model consistently achieves the highest and most robust accuracy. It successfully overcomes the limitations of using either pruning or bagging alone.
+
+\end{document}

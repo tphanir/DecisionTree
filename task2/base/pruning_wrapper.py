@@ -33,6 +33,10 @@ class PruningWrapper:
         # This will hold the final, pruned tree structure
         self.tree_ = None 
         
+        # --- FIX 1 ---
+        # Add 'self.tree' for compatibility with BaggingWrapper
+        self.tree = None 
+        
         self.name = f"Pruned ({self.base_estimator.name})"
 
     def fit(self, X, y):
@@ -53,6 +57,9 @@ class PruningWrapper:
             self.estimator_ = deepcopy(self.base_estimator)
             self.estimator_.fit(X, y)
             self.tree_ = self.estimator_.tree
+            
+            # --- FIX 2 ---
+            self.tree = self.tree_ # Assign to 'self.tree'
             return
 
         # 2. Grow a full (deep) tree on the sub-train set
@@ -70,6 +77,9 @@ class PruningWrapper:
         self._prune_recursive(
             self.tree_, X_val, y_val, X_train_sub, y_train_sub
         )
+        
+        # --- FIX 3 ---
+        self.tree = self.tree_ # Assign the final pruned tree to 'self.tree'
 
     def _prune_recursive(self, node, X_val, y_val, X_train, y_train):
         """
@@ -157,3 +167,17 @@ class PruningWrapper:
         return np.array(
             [self.estimator_._predict_row(row, self.tree_) for row in X]
         )
+
+    def _predict_row(self, row, tree):
+        """
+         Pass-through method called by the BaggingWrapper.
+        It passes the prediction request to the base estimator's
+        _predict_row method, using the provided tree.
+        """
+        # The 'tree' argument is passed in by BaggingWrapper (it's self.tree)
+        if tree is None:
+            raise ValueError("Estimator not fitted. Call fit() first.")
+
+        # Use the base estimator's traversal logic with the tree
+        # that BaggingWrapper passed to us.
+        return self.estimator_._predict_row(row, tree)
