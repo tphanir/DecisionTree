@@ -47,12 +47,6 @@ Congressional Voting Records,Gain Ratio,0.9312977099236641
 Congressional Voting Records,Chi-Square,0.9389312977099237
 Congressional Voting Records,Hellinger Distance,0.6564885496183206
 Congressional Voting Records,Twoing Rule,0.916030534351145
-Monks-1,Entropy,1.0
-Monks-1,Gini Index,1.0
-Monks-1,Gain Ratio,1.0
-Monks-1,Chi-Square,1.0
-Monks-1,Hellinger Distance,1.0
-Monks-1,Twoing Rule,1.0
 Chess (King-Rook vs King-Pawn),Entropy,0.7090719499478624
 Chess (King-Rook vs King-Pawn),Gini Index,0.7090719499478624
 Chess (King-Rook vs King-Pawn),Gain Ratio,0.7101147028154328

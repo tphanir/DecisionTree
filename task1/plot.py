@@ -92,17 +92,17 @@ def plot_base_criteria_by_dataset(df, save_path):
         hue_order=criteria_order,
         palette=palette
     )
-    
-    plt.title('Base Model Performance: Splitting Criteria vs. Dataset', fontsize=20, fontweight='bold')
-    plt.ylabel('Accuracy', fontsize=14)
-    plt.xlabel('Dataset', fontsize=14)
+    plt.xlabel(None)
+    plt.ylabel(None)
+    # plt.title('Base Model Performance: Splitting Criteria vs. Dataset', fontsize=20, fontweight='bold')
+    # plt.ylabel('Accuracy', fontsize=14)
+    # plt.xlabel('Dataset', fontsize=14)
     
     # Rotate x-axis labels for readability
     plt.xticks(rotation=45, ha='right', fontsize=12)
     
     # Place legend outside the plot
     plt.legend(title='Splitting Criterion', loc='center left', bbox_to_anchor=(1, 0.5), fontsize=12, title_fontsize=14)
-    
     # Adjust ylim to make differences clearer
     min_acc = df['Accuracy'].min() - 0.1
     plt.ylim(max(0, min_acc), 1.0) 

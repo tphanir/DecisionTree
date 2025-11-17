@@ -61,11 +61,6 @@ datasets = [
         ]
     },
     {
-        "name": "Monks-1",
-        "url": "https://archive.ics.uci.edu/ml/machine-learning-databases/monks-problems/monks-1.train",
-        "cols": ["a1", "a2", "a3", "a4", "a5", "a6", "class"]
-    },
-    {
         "name": "Chess (King-Rook vs King-Pawn)",
         "url": "https://archive.ics.uci.edu/ml/machine-learning-databases/chess/king-rook-vs-king-pawn/kr-vs-kp.data",
         "cols": [

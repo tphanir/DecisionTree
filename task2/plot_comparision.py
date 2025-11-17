@@ -242,10 +242,12 @@ def plot_final(acc_list, dataset_name, save_path):
 
     plt.xticks(x_numeric, CRITERIA, fontsize=13)
     plt.ylim(y_lower, y_upper)
-    plt.xlabel("Splitting Criterion", fontsize=14)
-    plt.ylabel("Accuracy", fontsize=14)
-    plt.title(f"Model Comparison on {dataset_name}",
-              fontsize=20, fontweight="bold", pad=15)
+    plt.xlabel(None)
+    plt.ylabel(None)
+    # plt.xlabel("Splitting Criterion", fontsize=14)
+    # plt.ylabel("Accuracy", fontsize=14)
+    # plt.title(f"Model Comparison on {dataset_name}",
+    #           fontsize=20, fontweight="bold", pad=15)
     plt.grid(axis='y', linestyle='--', alpha=0.33)
 
     proxies = [
